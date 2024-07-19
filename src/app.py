@@ -54,14 +54,13 @@ def get_member(id):
 def create_member():
     new_member= request.json
     jackson_family.add_member(new_member)
-    return "member create", 200
+    return "member created", 200
 
 @app.route('/member/<int:id>', methods=['DELETE'])
 def delete_member(id):
-    member = jackson_family.get_member(id)
-    if member:
-        jackson_family.delete_member(id)
-        return jsonify({"msg" : "Member delete"}), 200
+    member = jackson_family.delete_member(id)
+    if member is True:
+        return jsonify({"done": True}), 200
     else:
         return jsonify({"error": "Member not found"}), 404
 
